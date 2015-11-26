@@ -13,7 +13,7 @@ def deploy(path):
         for copy_file in COPY_FILES:
             if exists(copy_file):
                 run('rm -f %s' % copy_file)
-            put(copy_file, path)
+            put(copy_file, path, mode=0755)
         if exists('bot.pid'):
             pid = run('cat bot.pid')
             run('kill -9 ' + pid, quiet=True)
