@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	bot "github.com/PoolC/slack_bot/bot"
 	"gopkg.in/gcfg.v1"
 	"sync"
 )
@@ -27,11 +28,11 @@ func main() {
 		return
 	}
 
-	anzu := NewAnzu(cfg.Token.Anzu)
-	meu := NewMeu(cfg.Token.Meu)
+	anzu := bot.NewAnzu(cfg.Token.Anzu)
+	meu := bot.NewMeu(cfg.Token.Meu)
 
-	go StartBot(Bot(*anzu), &wg)
-	go StartBot(meu, &wg)
+	go bot.StartBot(bot.Bot(*anzu), &wg)
+	go bot.StartBot(meu, &wg)
 
 	wg.Wait()
 }
