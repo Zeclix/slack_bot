@@ -4,9 +4,9 @@ from fabric.context_managers import cd
 from fabric.contrib.files import exists
 from fabric.operations import put
 
-COPY_FILES = (
+COPY_FILES = [
     'slack_bot'
-)
+]
 
 def deploy(path):
     with cd(path):
