@@ -1,7 +1,18 @@
-[token]
-meu=
-anzu=
+[general]
+pidfilename=bot.pid
+logfilename=bot.log
+
+[bot "Meu"]
+token=
+[bot "Anzu"]
+token=
 
 [redis]
 host=127.0.0.1
 port=10
+
+[commands]
+port=8080
+
+[command "/echo"]
+token=

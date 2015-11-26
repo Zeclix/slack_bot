@@ -21,11 +21,12 @@ type Bot interface {
 type BaseBot struct {
 	*slack.Client
 	*slack.RTM
+	stop *chan struct{}
 }
 
-func NewBot(token string) *BaseBot {
+func NewBot(token string, stop *chan struct{}) *BaseBot {
 	api := slack.New(token)
-	bot := &BaseBot{api, api.NewRTM()}
+	bot := &BaseBot{api, api.NewRTM(), stop}
 	return bot
 }
 
@@ -86,6 +87,8 @@ Loop:
 				break Loop
 			default:
 			}
+		case _ = <-*bot_base.stop:
+			break Loop
 		}
 	}
 

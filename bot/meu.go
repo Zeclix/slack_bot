@@ -9,8 +9,8 @@ type Meu struct {
 	*BaseBot
 }
 
-func NewMeu(token string) *Meu {
-	return &Meu{NewBot(token)}
+func NewMeu(token string, stop *chan struct{}) *Meu {
+	return &Meu{NewBot(token, stop)}
 }
 
 func (bot *Meu) onMessageEvent(e *slack.MessageEvent) {
