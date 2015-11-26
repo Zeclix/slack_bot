@@ -1,0 +1,43 @@
+{
+	"ImportPath": "_/home/omniavinco/workspace/hotsan",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"github.com/PoolC/slack_bot"
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/PoolC/slack_bot",
+			"Rev": "cc95bbf748a31642ff1f9d6e17d8da4f7c88fdb2"
+		},
+		{
+			"ImportPath": "github.com/marcmak/calc/calc",
+			"Rev": "5bbbfc3b3149741fda5147a18568a62f6cd3fec1"
+		},
+		{
+			"ImportPath": "github.com/nlopes/slack",
+			"Comment": "v0.0.1-69-g9153359",
+			"Rev": "9153359e4c6e3dd6fecd68332164321b5efd543f"
+		},
+		{
+			"ImportPath": "github.com/sevlyar/go-daemon",
+			"Rev": "5841a7979e56bc7b2efa860e69f1d944e14f4d4a"
+		},
+		{
+			"ImportPath": "golang.org/x/net/websocket",
+			"Rev": "c745c36eab1034bceb7999c915ced45b1f99021f"
+		},
+		{
+			"ImportPath": "gopkg.in/bsm/ratelimit.v1",
+			"Rev": "fbc2d5a2daac4dc3801ee3073874800e2be6ccd1"
+		},
+		{
+			"ImportPath": "gopkg.in/gcfg.v1",
+			"Rev": "a3bc0742e3bbfd16123e6cee742cadec9a3301d2"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v3",
+			"Comment": "v3.2.16",
+			"Rev": "7ea220f54db94ef0b305499d409e9887feaf536e"
+		}
+	]
+}
