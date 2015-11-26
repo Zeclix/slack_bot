@@ -1,0 +1,13 @@
+language: go
+
+go:
+  - 1.3
+  - tip
+  
+go_import_path: github.com/PoolC/slack_bot
+
+insall:
+  - godep get github.com/PoolC/slack_bot
+  
+script:
+  - go build
