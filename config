@@ -9,10 +9,10 @@ token=
 
 [redis]
 host=127.0.0.1
-port=10
+port=6379
 
 [commands]
-port=8080
+port=18080
 
 [command "/echo"]
 token=

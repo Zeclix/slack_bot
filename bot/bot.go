@@ -3,6 +3,7 @@ package bot
 import (
 	"fmt"
 	"github.com/nlopes/slack"
+	"regexp"
 	"sync"
 )
 
@@ -57,6 +58,11 @@ func (bot *BaseBot) onConnectionError(e *slack.ConnectionErrorEvent) {
 }
 
 func (bot *BaseBot) onInvalidAuthEvent(e *slack.InvalidAuthEvent) {
+}
+
+func MatchRE(ret []string, text string, re *regexp.Regexp) bool {
+	ret = re.FindStringSubmatch(text)
+	return ret != nil
 }
 
 func StartBot(bot Bot, wg *sync.WaitGroup) {
