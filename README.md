@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/PoolC/slack_bot.svg)](https://travis-ci.org/PoolC/slack_bot)
 # slack_bot
 우리들의 장난감 메우와 안즈
 
