@@ -115,6 +115,7 @@ func NewServer(commands CommandsInfo, command CommandInfo) *CommandServer {
 	}
 
 	server.Handlers["/echo"].Handler = EchoCommand
+	server.Handlers["/namu"].Handler = NamuCommand
 
 	return server
 }
