@@ -114,10 +114,19 @@ func NewServer(commands CommandsInfo, command CommandInfo) *CommandServer {
 		server.Handlers[k] = &CommandRuntimeInfo{v.Token, nil}
 	}
 
-	server.Handlers["/echo"].Handler = EchoCommand
-	server.Handlers["/namu"].Handler = NamuCommand
+	server.registHandler("/echo", EchoCommand)
+	server.registHandler("/namu", NamuCommand)
 
 	return server
+}
+
+func (server *CommandServer) registHandler(key string, handler interface{}) {
+	if val, ok := server.Handlers[key]; ok {
+		val.Handler = handler
+	} else {
+		log.Println("Warning : config not found for ", key)
+		server.Handlers[key] = &CommandRuntimeInfo{"", handler}
+	}
 }
 
 func requestFormToRequestObj(r *http.Request) *Request {
