@@ -1,3 +1,5 @@
 *~
-bot.log
+*.log
 goenv
+*.pyc
+*.pid
