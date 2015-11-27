@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"reflect"
 	"sync"
@@ -154,10 +155,11 @@ func (server *CommandServer) commandHandler(w http.ResponseWriter, r *http.Reque
 				var buf []byte
 				buf, e = json.Marshal(response)
 				http.Post(req.ResponseUrl, "application/json", bytes.NewBuffer(buf))
+				log.Println("Deffered : ", string(buf))
 			}
 
 			if e != nil {
-				fmt.Println("Error occured : ", req, e)
+				log.Println("Error occured : ", req, e)
 			}
 		}
 	}
