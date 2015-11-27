@@ -16,3 +16,6 @@ port=18080
 
 [command "/echo"]
 token=
+
+[command "/namu"]
+token=
