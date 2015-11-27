@@ -36,7 +36,7 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 		break
 	default:
 		if matched, ok := MatchRE(e.Text, remember_re); ok {
-			key, val := strings.TrimSpace(matched[0]), strings.TrimSpace(matched[1])
+			key, val := strings.TrimSpace(matched[1]), strings.TrimSpace(matched[2])
 			if key == "" || val == "" {
 				bot.SendMessage(bot.NewOutgoingMessage("에...?", e.Channel))
 			} else if _, ok := MatchRE(val, tell_re); ok {
@@ -46,8 +46,8 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 				bot.SendMessage(bot.NewOutgoingMessage("에... 귀찮지만 기억했어", e.Channel))
 			}
 		} else if matched, ok := MatchRE(e.Text, tell_re); ok {
-			key := strings.TrimSpace(matched[0])
-			val := bot.rc.Get(key).String()
+			key := strings.TrimSpace(matched[1])
+			val := bot.rc.Get(key).Val()
 			if val == "" {
 				bot.SendMessage(bot.NewOutgoingMessage("그런거 몰라", e.Channel))
 			} else {
