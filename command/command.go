@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"image/color"
 	"net/http"
 	"reflect"
 	"sync"
@@ -30,6 +29,14 @@ type CommandServer struct {
 	Handlers map[string]*CommandRuntimeInfo
 }
 
+type Color struct {
+	r, g, b uint8
+}
+
+func (color Color) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf(`"`+"#%02x%02x%02x"+`"`, color.r, color.g, color.b)), nil
+}
+
 type AttachmentField struct {
 	title string
 	value string
@@ -37,21 +44,21 @@ type AttachmentField struct {
 }
 
 type Attachment struct {
-	fallback string
-	color    color.Color
-	pretext  string
+	Fallback string `json:"fallback"`
+	Color    Color  `json:"color"`
+	Pretext  string `json:"pretext"`
 
-	author_name string
-	author_link string
-	author_icon string
+	AuthorName string `json:"author_name"`
+	AuthorLink string `json:"author_link"`
+	AuthorIcon string `json:"author_icon"`
 
-	title      string
-	title_link string
+	Title     string `json:"title"`
+	TitleLink string `json:"title_link"`
 
-	text string
+	Text string `json:"text"`
 
-	image_url string
-	thumb_url string
+	ImageUrl string `json:"image_url"`
+	ThumbUrl string `json:"thumb_url"`
 }
 
 type ResponseTypeEnum int
@@ -66,6 +73,8 @@ func (e ResponseTypeEnum) MarshalJSON() ([]byte, error) {
 	var str string
 	switch e {
 	case deffered_in_channel:
+		str = "in_channel"
+		break
 	case in_channel:
 		str = "in_channel"
 		break
