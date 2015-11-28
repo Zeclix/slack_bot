@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"fmt"
 	"github.com/nlopes/slack"
 	"log"
 	"regexp"
@@ -29,6 +30,15 @@ func NewBot(token string, stop *chan struct{}) *BaseBot {
 	api := slack.New(token)
 	bot := &BaseBot{api, api.NewRTM(), stop}
 	return bot
+}
+
+func (bot *BaseBot) replySimple(e *slack.MessageEvent, text string) {
+	user, _ := bot.GetUserInfo(e.User)
+	bot.sendSimple(e, fmt.Sprintf("@%s: %s", user.Name, text))
+}
+
+func (bot *BaseBot) sendSimple(e *slack.MessageEvent, text string) {
+	bot.SendMessage(bot.NewOutgoingMessage(text, e.Channel))
 }
 
 func (bot *BaseBot) getBase() *BaseBot {

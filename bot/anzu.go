@@ -32,26 +32,26 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 		bot.SendMessage(bot.NewOutgoingMessage("뭐... 뭐라는거야", e.Channel))
 		break
 	case e.Text == "안즈쨩 뭐해?":
-		bot.SendMessage(bot.NewOutgoingMessage("숨셔", e.Channel))
+		bot.sendSimple(e, "숨셔")
 		break
 	default:
 		if matched, ok := MatchRE(e.Text, remember_re); ok {
 			key, val := strings.TrimSpace(matched[1]), strings.TrimSpace(matched[2])
 			if key == "" || val == "" {
-				bot.SendMessage(bot.NewOutgoingMessage("에...?", e.Channel))
+				bot.sendSimple(e, "에...?")
 			} else if _, ok := MatchRE(val, tell_re); ok {
-				bot.SendMessage(bot.NewOutgoingMessage("에... 귀찮아...", e.Channel))
+				bot.sendSimple(e, "에... 귀찮아...")
 			} else {
 				bot.rc.Set(key, val, 0)
-				bot.SendMessage(bot.NewOutgoingMessage("에... 귀찮지만 기억했어", e.Channel))
+				bot.sendSimple(e, "에... 귀찮지만 기억했어")
 			}
 		} else if matched, ok := MatchRE(e.Text, tell_re); ok {
 			key := strings.TrimSpace(matched[1])
 			val := bot.rc.Get(key).Val()
 			if val == "" {
-				bot.SendMessage(bot.NewOutgoingMessage("그런거 몰라", e.Channel))
+				bot.sendSimple(e, "그런거 몰라")
 			} else {
-				bot.SendMessage(bot.NewOutgoingMessage(val, e.Channel))
+				bot.sendSimple(e, val)
 			}
 		}
 		break
