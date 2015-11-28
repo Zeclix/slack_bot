@@ -116,6 +116,7 @@ func NewServer(commands CommandsInfo, command CommandInfo) *CommandServer {
 
 	server.registHandler("/echo", EchoCommand)
 	server.registHandler("/namu", NamuCommand)
+	server.registHandler("/zzal", ZzalCommand)
 
 	return server
 }
