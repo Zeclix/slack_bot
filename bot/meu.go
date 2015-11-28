@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/marcmak/calc/calc"
 	"github.com/nlopes/slack"
+	"log"
 	"regexp"
 )
 
@@ -32,6 +33,12 @@ func (bot *Meu) onMessageEvent(e *slack.MessageEvent) {
 		break
 	default:
 		if matched, ok := MatchRE(e.Text, calc_re); ok {
+			defer func() {
+				if r := recover(); r != nil {
+					log.Println("Recovered : %g", r)
+					bot.replySimple(e, "에러났다 메우")
+				}
+			}()
 			bot.sendSimple(e, fmt.Sprintf("%f", calc.Solve(matched[1])))
 		}
 	}
