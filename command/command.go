@@ -34,8 +34,12 @@ type Color struct {
 	r, g, b uint8
 }
 
+func (color Color) String() string {
+	return fmt.Sprintf("#%02x%02x%02x", color.r, color.g, color.b)
+}
+
 func (color Color) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf(`"`+"#%02x%02x%02x"+`"`, color.r, color.g, color.b)), nil
+	return []byte(`"` + color.String() + `"`), nil
 }
 
 type AttachmentField struct {
@@ -70,21 +74,26 @@ const (
 	deffered_in_channel
 )
 
-func (e ResponseTypeEnum) MarshalJSON() ([]byte, error) {
-	var str string
+func (e ResponseTypeEnum) String() string {
 	switch e {
 	case deffered_in_channel:
-		str = "in_channel"
-		break
+		fallthrough
 	case in_channel:
-		str = "in_channel"
-		break
+		return "in_channel"
 	case ephemeral:
-		str = "ephemeral"
-		break
+		return "ephemeral"
 	default:
+		return ""
+	}
+}
+
+func (e ResponseTypeEnum) MarshalJSON() ([]byte, error) {
+	str := e.String()
+
+	if str == "" {
 		return nil, errors.New("Invalid value")
 	}
+
 	return []byte(`"` + str + `"`), nil
 }
 
