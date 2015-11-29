@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/PoolC/slack_bot.svg)](https://travis-ci.org/PoolC/slack_bot)
+[![Coverage Status](https://coveralls.io/repos/PoolC/slack_bot/badge.svg?branch=master&service=github)](https://coveralls.io/github/PoolC/slack_bot?branch=master)
 # slack_bot
 우리들의 장난감 메우와 안즈
 
