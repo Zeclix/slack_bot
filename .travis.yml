@@ -12,10 +12,12 @@ before_install:
   - go get github.com/axw/gocov/gocov
   - go get github.com/mattn/goveralls
   - if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
+  - export PATH=$PATH:$GOPATH/bin
 
 insall:
   - godep get github.com/PoolC/slack_bot
 
 script:
   - go build
-  - $HOME/gopath/bin/goveralls -service=travis-ci
+  - gocov test ./... -covermode count > cov.json
+  - goveralls -service=travis-ci -gocovdata cov.json
