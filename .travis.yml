@@ -20,5 +20,7 @@ insall:
 script:
   - go build
   - gocov test ./... -covermode count > gocov.json
+  - ls bot
+  - ls command
   - cat gocov.json
   - goveralls -service=travis-ci -gocovdata gocov.json
