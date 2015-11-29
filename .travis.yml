@@ -21,6 +21,8 @@ script:
   - go build
   - gocov test ./... -covermode count > gocov.json
   - ls bot
+  - ls ${TRAVIS_BUILD_DIR}/bot
   - ls command
+  - ls ${TRAVIS_BUILD_DIR}/command
   - cat gocov.json
   - goveralls -service=travis-ci -gocovdata gocov.json
