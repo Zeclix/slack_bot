@@ -9,6 +9,8 @@ go:
 go_import_path: github.com/PoolC/slack_bot
 
 before_install:
+  - ls command
+  - ls ${TRAVIS_BUILD_DIR}/command
   - go get github.com/axw/gocov/gocov
   - go get github.com/mattn/goveralls
   - if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
