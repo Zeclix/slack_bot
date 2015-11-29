@@ -19,5 +19,6 @@ insall:
 
 script:
   - go build
-  - gocov test ./... -covermode count > cov.json
-  - goveralls -service=travis-ci -gocovdata cov.json
+  - gocov test ./... -covermode count > gocov.json
+  - cat gocov.json
+  - goveralls -service=travis-ci -gocovdata gocov.json
