@@ -15,7 +15,7 @@ before_install:
   - export PATH=$PATH:$GOPATH/bin
 
 install:
-  - godep get github.com/PoolC/slack_bot
+  - godep restore
 
 script:
   - go build
