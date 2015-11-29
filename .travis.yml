@@ -16,4 +16,4 @@ insall:
 
 script:
   - go build
-  - $GOPATH/bin/goveralls -service=travis-ci
+  - $HOME/gopath/bin/goveralls -service=travis-ci
