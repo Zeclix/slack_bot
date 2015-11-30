@@ -5,21 +5,29 @@
 
 # Prerequirement for develop
 - go
-- goenv (recommended)
-  - `go get github.com/crsmithdev/goenv`
 - godep (recommended)
   - `go get github.com/tools/godep`
 
-# Build instruction
+# Build instruction(sample)
 ```bash
-# init goenv
-goenv init github.com/PoolC/slack_bot
-# activate goenv
-source goenv/activate
+mkdir -p .workspace/src/github.com/PoolC
+ln -s `pwd` .workspace/src/github.com/PoolC/slack_bot
+export GOPATH=`pwd`/.workspace
+cd $GOPATH/src/github.com/PoolC/slack_bot
 # instll dependencies
-godep get github.com/PoolC/slack_bot
+godep restore
 # build it
 go build
+```
+
+# Run testcode
+```bash
+go test -cover ./...
+```
+
+# Update dependencies
+```bash
+godep save -r
 ```
 
 # command
