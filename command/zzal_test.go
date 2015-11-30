@@ -46,3 +46,15 @@ func TestZzalCommandSlugError(t *testing.T) {
 		t.Errorf("Error : no error report (%q)", res.Text)
 	}
 }
+
+func TestZzalCommandManual(t *testing.T) {
+	var req Request
+
+	res := ZzalCommand(req)
+	if res.ResponseType != ephemeral {
+		t.Errorf("ResponseType mismatch : expedted %q, but %q", ephemeral, res.ResponseType)
+	}
+	if len(res.Attachments) == 0 {
+		t.Errorf("Attachments not found")
+	}
+}
