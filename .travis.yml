@@ -14,10 +14,9 @@ before_install:
   - export PATH=$PATH:$GOPATH/bin
 
 install:
-  - go get github.com/PoolC/slack_bot
+  - godep restore
 
 script:
   - go build
   - gocov test ./... -covermode count > gocov.json
-  - cat gocov.json
   - goveralls -service=travis-ci -gocovdata gocov.json
