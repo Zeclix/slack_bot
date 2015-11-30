@@ -10,6 +10,25 @@ import (
 	"sync"
 )
 
+type CommandsInfo struct {
+	Port int
+}
+
+type CommandInfo map[string]*struct {
+	Token string
+}
+
+type CommandRuntimeInfo struct {
+	Token   string
+	Handler interface{}
+}
+
+type CommandServer struct {
+	Common   CommandsInfo
+	Command  CommandInfo
+	Handlers map[string]*CommandRuntimeInfo
+}
+
 func NewServer(commands CommandsInfo, command CommandInfo) *CommandServer {
 	server := &CommandServer{commands, command, map[string]*CommandRuntimeInfo{}}
 

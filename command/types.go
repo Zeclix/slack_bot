@@ -5,25 +5,6 @@ import (
 	"fmt"
 )
 
-type CommandsInfo struct {
-	Port int
-}
-
-type CommandInfo map[string]*struct {
-	Token string
-}
-
-type CommandRuntimeInfo struct {
-	Token   string
-	Handler interface{}
-}
-
-type CommandServer struct {
-	Common   CommandsInfo
-	Command  CommandInfo
-	Handlers map[string]*CommandRuntimeInfo
-}
-
 type Color struct {
 	r, g, b uint8
 }
