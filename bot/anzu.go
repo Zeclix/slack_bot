@@ -5,6 +5,7 @@ import (
 	"gopkg.in/redis.v3"
 	"regexp"
 	"strings"
+	"math/rand"
 )
 
 var (
@@ -29,6 +30,7 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 		bot.SendMessage(bot.NewOutgoingMessage("이거 놔라 이 퇴근도 못하는 놈이", e.Channel))
 		break
 	case e.Text == "안즈쨩 카와이":
+	case e.Text == "안즈 카와이":
 		bot.SendMessage(bot.NewOutgoingMessage("뭐... 뭐라는거야", e.Channel))
 		break
 	case e.Text == "안즈쨩 뭐해?":
@@ -42,8 +44,13 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 			} else if _, ok := MatchRE(val, tell_re); ok {
 				bot.sendSimple(e, "에... 귀찮아...")
 			} else {
-				bot.rc.Set(key, val, 0)
-				bot.sendSimple(e, "에... 귀찮지만 기억했어")
+				if rand.Float32() < 0.4 {
+					bot.rc.Set(key, val, 0)
+					bot.sendSimple(e, "에... 귀찮지만 기억했어")
+				}
+				else{
+					bot.sendSimple(e, "귀찮아...")
+				}
 			}
 		} else if matched, ok := MatchRE(e.Text, tell_re); ok {
 			key := strings.TrimSpace(matched[1])
