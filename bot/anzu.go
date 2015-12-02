@@ -44,7 +44,7 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 			} else if _, ok := MatchRE(val, tell_re); ok {
 				bot.sendSimple(e, "에... 귀찮아...")
 			} else {
-				if rand.Float32() < 0.4 {
+				if rand.Float32() < 0.6 {
 					bot.rc.Set(key, val, 0)
 					bot.sendSimple(e, "에... 귀찮지만 기억했어")
 				}
@@ -58,7 +58,12 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 			if val == "" {
 				bot.sendSimple(e, "그런거 몰라")
 			} else {
-				bot.sendSimple(e, val)
+				if rand.Float32() < 0.6 {
+					bot.sendSimple(e, val)
+				}
+				else{
+					bot.sendSimple(e, "Zzz...")
+				}
 			}
 		}
 		break
