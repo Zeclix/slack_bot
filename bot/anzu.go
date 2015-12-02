@@ -3,9 +3,9 @@ package bot
 import (
 	"github.com/nlopes/slack"
 	"gopkg.in/redis.v3"
+	"math/rand"
 	"regexp"
 	"strings"
-	"math/rand"
 )
 
 var (
@@ -30,6 +30,7 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 		bot.SendMessage(bot.NewOutgoingMessage("이거 놔라 이 퇴근도 못하는 놈이", e.Channel))
 		break
 	case e.Text == "안즈쨩 카와이":
+		fallthrough
 	case e.Text == "안즈 카와이":
 		bot.SendMessage(bot.NewOutgoingMessage("뭐... 뭐라는거야", e.Channel))
 		break
@@ -43,27 +44,21 @@ func (bot *Anzu) onMessageEvent(e *slack.MessageEvent) {
 				bot.sendSimple(e, "에...?")
 			} else if _, ok := MatchRE(val, tell_re); ok {
 				bot.sendSimple(e, "에... 귀찮아...")
+			} else if rand.Float32() < 0.6 {
+				bot.rc.Set(key, val, 0)
+				bot.sendSimple(e, "에... 귀찮지만 기억했어")
 			} else {
-				if rand.Float32() < 0.6 {
-					bot.rc.Set(key, val, 0)
-					bot.sendSimple(e, "에... 귀찮지만 기억했어")
-				}
-				else{
-					bot.sendSimple(e, "귀찮아...")
-				}
+				bot.sendSimple(e, "귀찮아...")
 			}
 		} else if matched, ok := MatchRE(e.Text, tell_re); ok {
 			key := strings.TrimSpace(matched[1])
 			val := bot.rc.Get(key).Val()
 			if val == "" {
 				bot.sendSimple(e, "그런거 몰라")
+			} else if rand.Float32() < 0.6 {
+				bot.sendSimple(e, val)
 			} else {
-				if rand.Float32() < 0.6 {
-					bot.sendSimple(e, val)
-				}
-				else{
-					bot.sendSimple(e, "Zzz...")
-				}
+				bot.sendSimple(e, "Zzz...")
 			}
 		}
 		break
