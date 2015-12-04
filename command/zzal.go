@@ -40,7 +40,7 @@ func ZzalCommand(req Request) *Response {
 	case "!random":
 		fallthrough
 	case "!r":
-		url := "https://shipduck.github.io/umi/archives.html"
+		url := "http://zzal.collapsed.mearchives.html"
 		resp, err := http.Get(url)
 		if err != nil {
 			ret.ResponseType = ephemeral
@@ -82,7 +82,7 @@ func ZzalCommand(req Request) *Response {
 		fallthrough
 	default:
 		var image Attachment
-		post_url := fmt.Sprintf("https://shipduck.github.io/umi/posts/%s/", key)
+		post_url := fmt.Sprintf("http://zzal.collapsed.me/posts/%s/", key)
 		image.TitleLink = post_url
 		resp, err := http.Get(post_url)
 		if err != nil {

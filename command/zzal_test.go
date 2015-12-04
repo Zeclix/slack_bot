@@ -12,7 +12,7 @@ func TestZzalCommandSlugSuccess(t *testing.T) {
 
 	var respType ResponseTypeEnum
 	respType = deffered_in_channel
-	imgUrl := "https://shipduck.github.io/umi/posts/no-hope-no-dream/OTL.jpg"
+	imgUrl := "http://zzal.collapsed.me/posts/no-hope-no-dream/OTL.jpg"
 
 	res := ZzalCommand(req)
 	if res.ResponseType != respType {
