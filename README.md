@@ -8,6 +8,24 @@
 - godep (recommended)
   - `go get github.com/tools/godep`
 
+# Prepare build environment for beginner(sample)
+`go get github.com/Perlmint/goautoenv`
+
+## Linux/OSX
+```bash
+git clone https://github.com/PoolC/slack_bot.git
+cd slack_bot
+goautoenv init
+source .goenv/bin/activate
+```
+## Windows(powershell)
+```
+git clone https://github.com/PoolC/slack_bot.git
+cd slack_bot
+goautoenv init
+.\.goenv\bin\activate.ps1
+```
+
 # Build instruction(sample)
 ```bash
 mkdir -p .workspace/src/github.com/PoolC
