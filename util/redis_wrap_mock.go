@@ -64,8 +64,10 @@ func (c *RedisClientMock) Set(key string, value interface{}, expiration time.Dur
 	switch value.(type) {
 	case string:
 		c.data[key] = []byte(value.(string))
+	case []byte:
+		c.data[key] = value.([]byte)
 	default:
-		c.data[key] = []byte(fmt.Sprintf("%q", value))
+		c.data[key] = []byte(fmt.Sprintf("%v", value))
 	}
 	return ret
 }
