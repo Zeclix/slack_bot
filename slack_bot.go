@@ -5,6 +5,7 @@ import (
 	"fmt"
 	bot "github.com/PoolC/slack_bot/bot"
 	command "github.com/PoolC/slack_bot/command"
+	. "github.com/PoolC/slack_bot/util"
 	daemon "github.com/sevlyar/go-daemon"
 	"gopkg.in/gcfg.v1"
 	"gopkg.in/redis.v3"
@@ -35,7 +36,7 @@ var (
 		Commands command.CommandsInfo
 	}
 
-	redisClient *redis.Client
+	redisClient RedisClient
 )
 
 func main() {
@@ -98,11 +99,11 @@ func worker() {
 	var wg sync.WaitGroup
 	wg.Add(3)
 
-	redisClient = redis.NewClient(&redis.Options{
+	redisClient = &RedisClientWrap{redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%d", cfg.Redis.Host, cfg.Redis.Port),
 		Password: "", // no password set
 		DB:       0,  // use default DB
-	})
+	})}
 
 	anzu := bot.NewAnzu(cfg.Bot["Anzu"].Token, &stop, redisClient)
 	meu := bot.NewMeu(cfg.Bot["Meu"].Token, &stop)
