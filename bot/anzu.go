@@ -11,6 +11,7 @@ import (
 var (
 	remember_re *regexp.Regexp = regexp.MustCompile("^안즈쨩? 기억해? ([^/]+)/(.+)")
 	tell_re     *regexp.Regexp = regexp.MustCompile("^안즈쨩? 알려줘 (.+)")
+	kawaii_re   *regexp.Regexp = regexp.MustCompile("^안즈쨩? 카와이")
 )
 
 type Anzu struct {
@@ -26,10 +27,6 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 	switch {
 	case e.Text == "사람은 일을 하고 살아야한다. 메우":
 		return "이거 놔라 이 퇴근도 못하는 놈이"
-	case e.Text == "안즈쨩 카와이":
-		fallthrough
-	case e.Text == "안즈 카와이":
-		return "뭐... 뭐라는거야"
 	case e.Text == "안즈쨩 뭐해?":
 		return "숨셔"
 	default:
@@ -55,6 +52,8 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 			} else {
 				return "Zzz..."
 			}
+		} else if _, ok := MatchRE(e.Text, kawaii_re); ok {
+			return "뭐... 뭐라는거야"
 		}
 	}
 	return nil
