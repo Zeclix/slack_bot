@@ -13,24 +13,29 @@ type Meu struct {
 }
 
 var (
-	calc_re *regexp.Regexp
+	calc_re *regexp.Regexp = regexp.MustCompile("^계산하라 메우 (.+)")
 )
 
 func NewMeu(token string, stop *chan struct{}) *Meu {
-	calc_re = regexp.MustCompile("^계산하라 메우 (.+)")
 	return &Meu{NewBot(token, stop)}
 }
 
 func (bot *Meu) onMessageEvent(e *slack.MessageEvent) {
+	message := meuMessageProcess(bot, e)
+	switch message.(type) {
+	case string:
+		bot.sendSimple(e, message.(string))
+	}
+}
+
+func meuMessageProcess(bot *Meu, e *slack.MessageEvent) interface{} {
 	switch {
 	case e.Text == "메우, 멱살":
-		bot.sendSimple(e, "사람은 일을 하고 살아야한다. 메우")
-		break
+		return "사람은 일을 하고 살아야한다. 메우"
 	case e.Text == "메우메우 펫탄탄":
-		bot.sendSimple(e, `메메메 메메메메 메우메우
+		return `메메메 메메메메 메우메우
 메메메 메우메우
-펫땅펫땅펫땅펫땅 다이스키`)
-		break
+펫땅펫땅펫땅펫땅 다이스키`
 	default:
 		if matched, ok := MatchRE(e.Text, calc_re); ok {
 			defer func() {
@@ -39,7 +44,9 @@ func (bot *Meu) onMessageEvent(e *slack.MessageEvent) {
 					bot.replySimple(e, "에러났다 메우")
 				}
 			}()
-			bot.sendSimple(e, fmt.Sprintf("%f", calc.Solve(matched[1])))
+			return fmt.Sprintf("%f", calc.Solve(matched[1]))
 		}
 	}
+
+	return nil
 }

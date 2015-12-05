@@ -2,7 +2,6 @@ package bot
 
 import (
 	. "github.com/PoolC/slack_bot/util"
-	"github.com/nlopes/slack"
 	"testing"
 )
 
@@ -10,16 +9,7 @@ func newAnzu() *Anzu {
 	return &Anzu{nil, NewRedisMock()}
 }
 
-func newMessageEvent(text, user string) *slack.MessageEvent {
-	ret := new(slack.MessageEvent)
-
-	ret.Text = text
-	ret.User = user
-
-	return ret
-}
-
-func TestSimpleReaction(t *testing.T) {
+func TestSimpleReactionAnzu(t *testing.T) {
 	anzu := newAnzu()
 
 	cases := []struct {
