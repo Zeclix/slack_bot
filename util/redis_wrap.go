@@ -1,8 +1,9 @@
 package util
 
 import (
-	"gopkg.in/redis.v3"
 	"time"
+
+	redis "gopkg.in/redis.v3"
 )
 
 type RedisClient interface {

@@ -3,9 +3,10 @@ package util
 import (
 	"errors"
 	"fmt"
-	"gopkg.in/redis.v3"
 	"strconv"
 	"time"
+
+	redis "gopkg.in/redis.v3"
 )
 
 type StringCmdMock struct {

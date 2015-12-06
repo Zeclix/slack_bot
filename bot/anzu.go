@@ -1,11 +1,12 @@
 package bot
 
 import (
-	. "github.com/PoolC/slack_bot/util"
-	"github.com/nlopes/slack"
 	"math/rand"
 	"regexp"
 	"strings"
+
+	. "github.com/PoolC/slack_bot/util"
+	slack "github.com/nlopes/slack"
 )
 
 var (

@@ -3,16 +3,17 @@ package main
 import (
 	"flag"
 	"fmt"
-	bot "github.com/PoolC/slack_bot/bot"
-	command "github.com/PoolC/slack_bot/command"
-	. "github.com/PoolC/slack_bot/util"
-	daemon "github.com/sevlyar/go-daemon"
-	"gopkg.in/gcfg.v1"
-	"gopkg.in/redis.v3"
 	"log"
 	"os"
 	"sync"
 	"syscall"
+
+	bot "github.com/PoolC/slack_bot/bot"
+	command "github.com/PoolC/slack_bot/command"
+	. "github.com/PoolC/slack_bot/util"
+	daemon "github.com/sevlyar/go-daemon"
+	gcfg "gopkg.in/gcfg.v1"
+	redis "gopkg.in/redis.v3"
 )
 
 var (
