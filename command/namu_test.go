@@ -33,12 +33,12 @@ func TestNamuCommand(t *testing.T) {
 		{"몰라 뭐야 그거 무서워", "s_y_e_2___",
 			deffered_in_channel,
 			"나무위키 - 몰라 뭐야 그거 무서워",
-			"https://namu.wiki/w/%EB%AA%B0%EB%9D%BC+%EB%AD%90%EC%95%BC+%EA%B7%B8%EA%B1%B0+%EB%AC%B4%EC%84%9C%EC%9B%8C",
+			"https://namu.wiki/w/%EB%AA%B0%EB%9D%BC%20%EB%AD%90%EC%95%BC%20%EA%B7%B8%EA%B1%B0%20%EB%AC%B4%EC%84%9C%EC%9B%8C",
 			"@s_y_e_2___ 나무위키 링크"},
 		{" remove useless spaces  ", "s_y_e_2___",
 			deffered_in_channel,
 			"나무위키 - remove useless spaces",
-			"https://namu.wiki/w/remove+useless+spaces",
+			"https://namu.wiki/w/remove%20useless%20spaces",
 			"@s_y_e_2___ 나무위키 링크"},
 	}
 	for _, c := range cases {
@@ -47,7 +47,6 @@ func TestNamuCommand(t *testing.T) {
 		req.UserName = c.username
 
 		res := NamuCommand(req)
-		t.Log(req)
 		if len(res.Attachments) == 0 {
 			t.Errorf("Error attachments not found")
 		}

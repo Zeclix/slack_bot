@@ -21,7 +21,8 @@ func NamuCommand(req Request) *Response {
 		ret.ResponseType = deffered_in_channel
 
 		attachment.Title = "나무위키 - " + keyword
-		attachment.TitleLink = "https://namu.wiki/w/" + url.QueryEscape(keyword)
+		attachment.TitleLink = "https://namu.wiki/w/" +
+			strings.Replace(url.QueryEscape(keyword), "+", "%20", -1)
 		attachment.Text = "@" + req.UserName + " 나무위키 링크"
 	}
 
