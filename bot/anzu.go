@@ -8,8 +8,6 @@ import (
 
 	"fmt"
 
-	"log"
-
 	. "github.com/PoolC/slack_bot/util"
 	slack "github.com/nlopes/slack"
 )
@@ -39,13 +37,12 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 		return "숨셔"
 	default:
 		if AcceptRE(e.Text, give_candy_re) {
-			last := bot.rc.Get(fmt.Sprintf("%s_lastfail", e.User)).String()
+			last := bot.rc.Get(fmt.Sprintf("%s_lastfail", e.User)).Val()
 			if last == "" {
 				return ""
 			}
 			force_accept = true
 			e.Text = last
-			log.Printf("Retry : %s    %s", e.Text, last)
 		}
 
 		if matched, ok := MatchRE(e.Text, remember_re); ok {
