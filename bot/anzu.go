@@ -63,7 +63,7 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 				}
 			default:
 				ret = "귀찮아..."
-				bot.rc.Set(fmt.Sprintf("%s_lastfail", e.User), e.Text, time.Duration(300))
+				bot.rc.Set(fmt.Sprintf("%s_lastfail", e.User), e.Text, time.Duration(300*time.Second))
 			}
 
 			return ret
@@ -79,7 +79,7 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 			case rand.Float32() < 0.4:
 				ret = val
 			default:
-				bot.rc.Set(fmt.Sprintf("%s_lastfail", e.User), e.Text, time.Duration(300))
+				bot.rc.Set(fmt.Sprintf("%s_lastfail", e.User), e.Text, time.Duration(300*time.Second))
 				ret = "Zzz..."
 			}
 			return ret
