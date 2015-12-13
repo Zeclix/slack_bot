@@ -2,10 +2,11 @@ package bot
 
 import (
 	"fmt"
-	"github.com/marcmak/calc/calc"
-	"github.com/nlopes/slack"
 	"log"
 	"regexp"
+
+	"github.com/marcmak/calc/calc"
+	"github.com/nlopes/slack"
 )
 
 type Meu struct {

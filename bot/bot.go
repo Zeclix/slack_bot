@@ -2,10 +2,11 @@ package bot
 
 import (
 	"fmt"
-	"github.com/nlopes/slack"
 	"log"
 	"regexp"
 	"sync"
+
+	"github.com/nlopes/slack"
 )
 
 type Bot interface {
@@ -73,6 +74,11 @@ func (bot *BaseBot) onInvalidAuthEvent(e *slack.InvalidAuthEvent) {
 func MatchRE(text string, re *regexp.Regexp) ([]string, bool) {
 	matched := re.FindStringSubmatch(text)
 	return matched, matched != nil
+}
+
+func AcceptRE(text string, re *regexp.Regexp) bool {
+	_, ok := MatchRE(text, re)
+	return ok
 }
 
 func StartBot(bot Bot, wg *sync.WaitGroup) {
