@@ -44,6 +44,9 @@ func CurrencyCommand(req Request) *Response {
 	if matched[3] == "" {
 		matched[4] = "KRW"
 	}
+	// make upper...
+	matched[2] = strings.ToUpper(matched[2])
+	matched[4] = strings.ToUpper(matched[4])
 	key := fmt.Sprintf("%s%s", matched[2], matched[4])
 
 	rate := 0.0
