@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"reflect"
+	"strings"
 	"sync"
 )
 
@@ -15,12 +16,14 @@ type CommandsInfo struct {
 }
 
 type CommandInfo map[string]*struct {
-	Token string
+	Token   string
+	Options []string
 }
 
 type CommandRuntimeInfo struct {
 	Token   string
 	Handler interface{}
+	Options map[string]string
 }
 
 type CommandServer struct {
@@ -33,22 +36,32 @@ func NewServer(commands CommandsInfo, command CommandInfo) *CommandServer {
 	server := &CommandServer{commands, command, map[string]*CommandRuntimeInfo{}}
 
 	for k, v := range command {
-		server.Handlers[k] = &CommandRuntimeInfo{v.Token, nil}
+		var parsed_options map[string]string
+		for _, val := range v.Options {
+			vals := strings.Split(val, ":")
+			parsed_options[vals[0]] = vals[1]
+		}
+		server.Handlers[k] = &CommandRuntimeInfo{v.Token, nil, parsed_options}
 	}
 
-	server.registHandler("/echo", EchoCommand)
-	server.registHandler("/namu", NamuCommand)
-	server.registHandler("/zzal", ZzalCommand)
+	server.registHandler("/echo", EchoCommand, nil)
+	server.registHandler("/namu", NamuCommand, nil)
+	server.registHandler("/zzal", ZzalCommand, nil)
 
 	return server
 }
 
-func (server *CommandServer) registHandler(key string, handler interface{}) {
+type HandlerInitializer func(*map[string]string)
+
+func (server *CommandServer) registHandler(key string, handler interface{}, initializer HandlerInitializer) {
 	if val, ok := server.Handlers[key]; ok {
 		val.Handler = handler
 	} else {
 		log.Println("Warning : config not found for ", key)
-		server.Handlers[key] = &CommandRuntimeInfo{"", handler}
+		server.Handlers[key] = &CommandRuntimeInfo{"", handler, nil}
+	}
+	if initializer != nil {
+		initializer(&server.Handlers[key].Options)
 	}
 }
 
