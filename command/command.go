@@ -47,6 +47,7 @@ func NewServer(commands CommandsInfo, command CommandInfo) *CommandServer {
 	server.registHandler("/echo", EchoCommand, nil)
 	server.registHandler("/namu", NamuCommand, nil)
 	server.registHandler("/zzal", ZzalCommand, nil)
+	server.registHandler("/currency", CurrencyCommand, nil)
 
 	return server
 }
