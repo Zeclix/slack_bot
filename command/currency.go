@@ -96,7 +96,7 @@ func CurrencyCommand(req Request) *Response {
 
 	ret.Attachments = []Attachment{
 		Attachment{
-			Text: fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], original_value*rate, matched[3]),
+			Text: fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], original_value*rate, matched[4]),
 		},
 	}
 
