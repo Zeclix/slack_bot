@@ -26,7 +26,7 @@ type rateCache struct {
 }
 
 var (
-	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(\\w{3})(\\s*=\\s*[?]\\s*(\\w{3}))?")
+	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(\\w{3})(\\s*=\\s*[?]?\\s*(\\w{3}))?")
 	rate_cache map[string]rateCache = map[string]rateCache{}
 )
 
@@ -44,6 +44,9 @@ func CurrencyCommand(req Request) *Response {
 	if matched[3] == "" {
 		matched[4] = "KRW"
 	}
+	// make upper...
+	matched[2] = strings.ToUpper(matched[2])
+	matched[4] = strings.ToUpper(matched[4])
 	key := fmt.Sprintf("%s%s", matched[2], matched[4])
 
 	rate := 0.0
@@ -89,6 +92,9 @@ func CurrencyCommand(req Request) *Response {
 				rate:      rate,
 				cached_at: time.Now(),
 			}
+		} else {
+			ret.Text = "Unknown Error"
+			return ret
 		}
 	}
 
@@ -96,9 +102,8 @@ func CurrencyCommand(req Request) *Response {
 
 	ret.Attachments = []Attachment{
 		Attachment{
-			Color:   Color{r: 33, g: 108, b: 42},
-			Pretext: fmt.Sprintf("Rate : %f", rate),
-			Text:    fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], original_value*rate, matched[4]),
+			Color: Color{r: 33, g: 108, b: 42},
+			Text:  fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], original_value*rate, matched[4]),
 		},
 	}
 
