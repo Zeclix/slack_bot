@@ -26,7 +26,7 @@ type rateCache struct {
 }
 
 var (
-	command_re *regexp.Regexp       = regexp.MustCompile("(\\d(?:\\.\\d+)?)\\s*(\\w{3})\\s*=\\s*[?]\\s*(\\w{3})")
+	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(\\w{3})(\\s*=\\s*[?]\\s*(\\w{3}))?")
 	rate_cache map[string]rateCache = map[string]rateCache{}
 )
 
@@ -41,7 +41,10 @@ func CurrencyCommand(req Request) *Response {
 	}
 
 	original_value, _ := strconv.ParseFloat(matched[1], 64)
-	key := fmt.Sprintf("%s%s", matched[2], matched[3])
+	if matched[3] == "" {
+		matched[4] = "KRW"
+	}
+	key := fmt.Sprintf("%s%s", matched[2], matched[4])
 
 	rate := 0.0
 	if cached, ok := rate_cache[key]; ok {
