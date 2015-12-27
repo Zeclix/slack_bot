@@ -92,6 +92,9 @@ func CurrencyCommand(req Request) *Response {
 				rate:      rate,
 				cached_at: time.Now(),
 			}
+		} else {
+			ret.Text = "Unknown Error"
+			return ret
 		}
 	}
 
