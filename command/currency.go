@@ -26,7 +26,7 @@ type rateCache struct {
 }
 
 var (
-	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(\\w{3})(\\s*=\\s*[?]\\s*(\\w{3}))?")
+	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(\\w{3})(\\s*=\\s*[?]?\\s*(\\w{3}))?")
 	rate_cache map[string]rateCache = map[string]rateCache{}
 )
 
