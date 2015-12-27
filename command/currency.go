@@ -102,9 +102,8 @@ func CurrencyCommand(req Request) *Response {
 
 	ret.Attachments = []Attachment{
 		Attachment{
-			Color:   Color{r: 33, g: 108, b: 42},
-			Pretext: fmt.Sprintf("Rate : %f", rate),
-			Text:    fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], original_value*rate, matched[4]),
+			Color: Color{r: 33, g: 108, b: 42},
+			Text:  fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], original_value*rate, matched[4]),
 		},
 	}
 
