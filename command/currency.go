@@ -53,18 +53,23 @@ func CurrencyCommand(req Request) *Response {
 	if matched[3] == "" {
 		matched[4] = "KRW"
 	}
+
+	src_value := original_value
 	// make upper...
 	matched[2] = strings.ToUpper(matched[2])
 	matched[4] = strings.ToUpper(matched[4])
-	if info, ok := special_currency_map[matched[2]]; ok {
-		original_value = original_value * info.rate
-		matched[2] = info.unit
+
+	src_unit := matched[2]
+	target_unit := matched[4]
+	if info, ok := special_currency_map[src_unit]; ok {
+		src_value = original_value * info.rate
+		src_unit = info.unit
 	}
-	if info, ok := special_currency_map[matched[4]]; ok {
-		original_value = original_value / info.rate
-		matched[4] = info.unit
+	if info, ok := special_currency_map[target_unit]; ok {
+		src_value = original_value / info.rate
+		target_unit = info.unit
 	}
-	key := fmt.Sprintf("%s%s", matched[2], matched[4])
+	key := fmt.Sprintf("%s%s", src_unit, target_unit)
 
 	rate := 0.0
 	if cached, ok := rate_cache[key]; ok {
@@ -120,7 +125,7 @@ func CurrencyCommand(req Request) *Response {
 	ret.Attachments = []Attachment{
 		Attachment{
 			Color: Color{r: 33, g: 108, b: 42},
-			Text:  fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], original_value*rate, matched[4]),
+			Text:  fmt.Sprintf("%.2f %s = %.2f %s", original_value, matched[2], src_value*rate, matched[4]),
 		},
 	}
 
