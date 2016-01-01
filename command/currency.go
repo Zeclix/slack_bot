@@ -36,6 +36,7 @@ var (
 	special_currency_map map[string]currencyRatio = map[string]currencyRatio{
 		"개리엇": currencyRatio{ 30000000, "USD" },
 		"4대강" : currencyRatio{ 22000000000000, "KRW" },
+		"팝픽" : currencyRatio{ 344, "KRW" },
 	}
 )
 
