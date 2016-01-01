@@ -31,7 +31,7 @@ type currencyRatio struct {
 }
 
 var (
-	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(.{3})(\\s*=\\s*[?]?\\s*(.{3}))?")
+	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*([^\\s=]+)(\\s*=\\s*[?]?\\s*([^\\s=]+))?")
 	rate_cache map[string]rateCache = map[string]rateCache{}
 	special_currency_map map[string]currencyRatio = map[string]currencyRatio{
 		"개리엇": currencyRatio{ 30000000, "USD" },
