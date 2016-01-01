@@ -25,9 +25,18 @@ type rateCache struct {
 	cached_at time.Time
 }
 
+type currencyRatio struct {
+	rate float64
+	unit string
+}
+
 var (
-	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(\\w{3})(\\s*=\\s*[?]?\\s*(\\w{3}))?")
+	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*(.{3})(\\s*=\\s*[?]?\\s*(.{3}))?")
 	rate_cache map[string]rateCache = map[string]rateCache{}
+	special_currency_map map[string]currencyRatio = map[string]currencyRatio{
+		"개리엇": currencyRatio{ 30000000, "USD" },
+		"4대강" : currencyRatio{ 22000000000000, "KRW" },
+	}
 )
 
 func CurrencyCommand(req Request) *Response {
@@ -47,6 +56,14 @@ func CurrencyCommand(req Request) *Response {
 	// make upper...
 	matched[2] = strings.ToUpper(matched[2])
 	matched[4] = strings.ToUpper(matched[4])
+	if info, ok := special_currency_map[matched[2]]; ok {
+		original_value = original_value * info.rate
+		matched[2] = info.unit
+	}
+	if info, ok := special_currency_map[matched[4]]; ok {
+		original_value = original_value / info.rate
+		matched[4] = info.unit
+	}
 	key := fmt.Sprintf("%s%s", matched[2], matched[4])
 
 	rate := 0.0
