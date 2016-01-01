@@ -33,12 +33,21 @@ type currencyRatio struct {
 var (
 	command_re *regexp.Regexp       = regexp.MustCompile("(\\d+(?:\\.\\d+)?)\\s*([^\\s=]+)(\\s*=\\s*[?]?\\s*([^\\s=]+))?")
 	rate_cache map[string]rateCache = map[string]rateCache{}
+	alias_map map[string]string = map[string]string {
+		"사대강": "4대강",
+	}
 	special_currency_map map[string]currencyRatio = map[string]currencyRatio{
 		"개리엇": currencyRatio{ 30000000, "USD" },
 		"4대강" : currencyRatio{ 22000000000000, "KRW" },
 		"팝픽" : currencyRatio{ 344, "KRW" },
 	}
 )
+
+func applyAlias(unit *string) {
+	if alias, ok := alias_map[*unit]; ok {
+		*unit = alias
+	}
+}
 
 func CurrencyCommand(req Request) *Response {
 	ret := new(Response)
@@ -58,7 +67,9 @@ func CurrencyCommand(req Request) *Response {
 	src_value := original_value
 	// make upper...
 	matched[2] = strings.ToUpper(matched[2])
+	applyAlias(&matched[2])
 	matched[4] = strings.ToUpper(matched[4])
+	applyAlias(&matched[4])
 
 	src_unit := matched[2]
 	target_unit := matched[4]
