@@ -17,3 +17,11 @@ func TestSpecialCurrencyCommand(t *testing.T) {
 	}
 	t.Log(ret)
 }
+
+func TestCurrencyAlias(t *testing.T) {
+	unit := "사대강"
+	applyAlias(&unit)
+	if unit != "4대강" {
+		t.Error("alias error")
+	}
+}
