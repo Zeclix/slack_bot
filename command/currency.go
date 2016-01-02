@@ -74,11 +74,11 @@ func CurrencyCommand(req Request) *Response {
 	src_unit := matched[2]
 	target_unit := matched[4]
 	if info, ok := special_currency_map[src_unit]; ok {
-		src_value = original_value * info.rate
+		src_value = src_value * info.rate
 		src_unit = info.unit
 	}
 	if info, ok := special_currency_map[target_unit]; ok {
-		src_value = original_value / info.rate
+		src_value = src_value / info.rate
 		target_unit = info.unit
 	}
 	key := fmt.Sprintf("%s%s", src_unit, target_unit)
