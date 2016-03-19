@@ -75,7 +75,7 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 			case val == "":
 				ret = "그런거 몰라"
 			case force_accept:
-				ret = fmt.Sprintf("%s 물어봤지?\n%s\n야", key, val)
+				ret = fmt.Sprintf("%s 물어봤지? %s 야", key, val)
 			case rand.Float32() < 0.4:
 				ret = val
 			default:
