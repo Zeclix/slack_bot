@@ -17,4 +17,4 @@ install:
 
 script:
   - go build
-  - goveralls -service=travis-ci
+  - if [ $TRAVIS_BRANCH = master ]; then goveralls -service=travis-ci; else  go test ./...; fi
