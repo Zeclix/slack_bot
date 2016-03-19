@@ -17,5 +17,4 @@ install:
 
 script:
   - go build
-  - gocov test ./... -covermode count > gocov.json
-  - goveralls -service=travis-ci -gocovdata gocov.json
+  - goveralls -service=travis-ci
