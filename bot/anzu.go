@@ -8,6 +8,8 @@ import (
 
 	"fmt"
 
+	"strconv"
+
 	. "github.com/PoolC/slack_bot/util"
 	slack "github.com/nlopes/slack"
 )
@@ -17,6 +19,7 @@ var (
 	tell_re       *regexp.Regexp = regexp.MustCompile("^안즈쨩? 알려줘 (.+)")
 	kawaii_re     *regexp.Regexp = regexp.MustCompile("^안즈쨩? 카와이")
 	give_candy_re *regexp.Regexp = regexp.MustCompile("^안즈쨩? 사탕줄게")
+	dice          *regexp.Regexp = regexp.MustCompile("^안즈쨩? 주사위 ([0-9]+)")
 )
 
 type Anzu struct {
@@ -85,6 +88,12 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 			return ret
 		} else if _, ok := MatchRE(e.Text, kawaii_re); ok {
 			return "뭐... 뭐라는거야"
+		} else if matched, ok := MatchRE(e.Text, dice); ok {
+			num, e := strconv.Atoi(matched[1])
+			if e != nil {
+				return "주사위는 정수만 가능해"
+			}
+			return fmt.Sprintf("%d", int(float32(num-1)*rand.Float32())+1)
 		}
 	}
 	return nil
