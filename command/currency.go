@@ -35,11 +35,17 @@ var (
 	rate_cache map[string]rateCache = map[string]rateCache{}
 	alias_map map[string]string = map[string]string {
 		"사대강": "4대강",
+		"K달탐사": "k달탐사",
+		"케이달탐사": "k달탐사",
+		"K알파고": "k알파고",
+		"케이알파고": "k알파고",
 	}
 	special_currency_map map[string]currencyRatio = map[string]currencyRatio{
 		"개리엇": currencyRatio{ 30000000, "USD" },
 		"4대강" : currencyRatio{ 22000000000000, "KRW" },
 		"팝픽" : currencyRatio{ 344, "KRW" },
+		"k달탐사" : currencyRatio{ 10000000000, "KRW" },
+		"k알파고" : currencyRatio{ 30000000000, "KRW" },
 	}
 )
 
