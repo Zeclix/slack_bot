@@ -8,6 +8,8 @@ import (
 
 	"fmt"
 
+	"strconv"
+
 	. "github.com/PoolC/slack_bot/util"
 	slack "github.com/nlopes/slack"
 )
@@ -87,8 +89,11 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 		} else if _, ok := MatchRE(e.Text, kawaii_re); ok {
 			return "뭐... 뭐라는거야"
 		} else if matched, ok := MatchRE(e.Text, dice); ok {
-			num := matched[1]
-			return fmt.Sprintf("%d", num * rand.Float32())
+			num, e := strconv.Atoi(matched[1])
+			if e != nil {
+				return "주사위는 정수만 가능해"
+			}
+			return fmt.Sprintf("%d", int(float32(num)*rand.Float32()))
 		}
 	}
 	return nil
