@@ -93,7 +93,7 @@ func anzuMessageProcess(bot *Anzu, e *slack.MessageEvent) interface{} {
 			if e != nil {
 				return "주사위는 정수만 가능해"
 			}
-			return fmt.Sprintf("%d", int(float32(num)*rand.Float32()))
+			return fmt.Sprintf("%d", int(float32(num-1)*rand.Float32())+1)
 		}
 	}
 	return nil
