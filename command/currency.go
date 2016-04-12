@@ -46,6 +46,7 @@ var (
 		"팝픽" : currencyRatio{ 344, "KRW" },
 		"k달탐사" : currencyRatio{ 10000000000, "KRW" },
 		"k알파고" : currencyRatio{ 30000000000, "KRW" },
+		"최저시급": currencyRatio{ 6030, "KRW" },
 	}
 )
 
