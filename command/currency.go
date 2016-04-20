@@ -39,6 +39,8 @@ var (
 		"케이달탐사": "k달탐사",
 		"K알파고": "k알파고",
 		"케이알파고": "k알파고",
+		"tmax해킹": "티맥스해킹",
+		"TMAX해킹": "티맥스해킹",
 	}
 	special_currency_map map[string]currencyRatio = map[string]currencyRatio{
 		"개리엇": currencyRatio{ 30000000, "USD" },
@@ -47,6 +49,7 @@ var (
 		"k달탐사" : currencyRatio{ 10000000000, "KRW" },
 		"k알파고" : currencyRatio{ 30000000000, "KRW" },
 		"최저시급": currencyRatio{ 6030, "KRW" },
+		"티맥스해킹": currencyRatio{ 100000000, "KRW" },
 	}
 )
 
