@@ -2,13 +2,23 @@ package bot
 
 import "github.com/nlopes/slack"
 import "strings"
+import "math/rand"
+
+func postResponse(bot *BaseBot, channel string, emoji string, name string, response string) {
+	bot.PostMessage(channel, response, slack.PostMessageParameters{
+		AsUser:    false,
+		IconEmoji: emoji,
+		Username:  name,
+	})
+}
+
+func randomResponse(bot *BaseBot, channel string, emoji string, name string, responses []string) {
+	response := responses[rand.Intn(len(responses))]
+	postResponse(bot, channel, emoji, name, response)
+}
 
 func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	if strings.Contains(e.Text, "72") {
-		bot.PostMessage(e.Channel, "큿", slack.PostMessageParameters{
-			AsUser:    false,
-			IconEmoji: ":kutt:",
-			Username:  "치하야",
-		})
+		postResponse(bot, e.Channel, ":kutt:", "치하야", "큿")
 	}
 }
