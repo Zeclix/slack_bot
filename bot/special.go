@@ -17,11 +17,25 @@ func randomResponse(bot *BaseBot, channel string, emoji string, name string, res
 	postResponse(bot, channel, emoji, name, response)
 }
 
+var (
+	anduinresp []string = []string{
+		"안녕하세요!",
+		"감사합니다!",
+		"이게... 아닌데...",
+		"빛이 당신을 태울 것입니다!",
+		"정말 잘하셨어요.",
+		"죄송합니다.",
+	}
+)
+
 func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	if strings.Contains(e.Text, "72") {
 		postResponse(bot, e.Channel, ":kutt:", "치하야", "큿")
 	}
 	if strings.Contains(e.Text, "크킄") {
 		postResponse(bot, e.Channel, ":chuni:", "흑염룡", "흐콰한다")
+	}
+	if strings.Contains(e.Text, "안두인") {
+		randomResponse(bot, e.Channel, ":anduin:", "안두인", anduinresp)
 	}
 }
