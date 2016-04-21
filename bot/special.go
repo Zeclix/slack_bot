@@ -29,7 +29,7 @@ var (
 )
 
 func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
-	if strings.Contains(e.Text, "72") {
+	if strings.Contains(e.Text, "72") || strings.Contains(e.Text, "치하야") || strings.Contains(e.Text, "큿") {
 		postResponse(bot, e.Channel, ":kutt:", "치하야", "큿")
 	}
 	if strings.Contains(e.Text, "크킄") {
