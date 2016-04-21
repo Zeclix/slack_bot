@@ -46,6 +46,8 @@ func meuMessageProcess(bot *Meu, e *slack.MessageEvent) interface{} {
 				}
 			}()
 			return fmt.Sprintf("%f", calc.Solve(matched[1]))
+		} else {
+			specialResponses(bot.getBase(), e)
 		}
 	}
 
