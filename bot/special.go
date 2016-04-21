@@ -61,4 +61,7 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	if strings.Contains(e.Text, "웃우") {
 		randomResponse(bot, e.Channel, ":yayoyee:", "타카츠키 야요이", yayoiresp)
 	}
+	if strings.Contains(e.Text, "혼란하다 혼란해") {
+		postResponse(bot, e.Channel, ":honse:", "혼세마왕", "혼세혼세")
+	}
 }
