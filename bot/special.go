@@ -41,6 +41,10 @@ var (
 		"ζ*'ヮ')ζ 프로듀서, 봐주세요-! 오리씨와 오리 엄마와 개구리씨와 돼지씨와... 그리고... 어쨌든, 잔뜩 잔뜩 있는 모두와 노래할게요-♪ 에헤헷, 귀여워요-!",
 		"ζ*'ヮ')ζ 에헤헷, 늑대씨 의상이에요-! 커흠-, 먹어버릴테다-! ...앗, 사실은 먹지 않을테니까 무서워하지 말아주세요~! 상냥한 늑대씨가 되고 싶으니깐요!",
 	}
+	guguresp []string = []string{
+		"구구구",
+		"@scarlet9",
+	}
 )
 
 func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
@@ -63,5 +67,8 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	}
 	if strings.Contains(e.Text, "혼란하다 혼란해") {
 		postResponse(bot, e.Channel, ":honse:", "혼세마왕", "혼세혼세")
+	}
+	if strings.Contains(e.Text, "비둘기") {
+		randomResponse(bot, e.Channel, ":gugu:", "비둘기", guguresp)
 	}
 }
