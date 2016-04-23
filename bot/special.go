@@ -9,6 +9,7 @@ func postResponse(bot *BaseBot, channel string, emoji string, name string, respo
 		AsUser:    false,
 		IconEmoji: emoji,
 		Username:  name,
+		Parse:     "full",
 	})
 }
 
