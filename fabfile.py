@@ -2,11 +2,16 @@ import posixpath as path
 from fabric.api import run
 from fabric.context_managers import cd
 from fabric.contrib.files import exists
-from fabric.operations import put
+from fabric.operations import put, local
 
 COPY_FILES = [
-    'slack_bot'
+    'slack_bot',
+    'config'
 ]
+
+def decrypt_config(name):
+    local('rm -f config')
+    local('openssl enc -aes-256-ecb -d -in %s -out config -pass env:SLACK_CONFIG_PASS' % name)
 
 def deploy(path):
     with cd(path):
