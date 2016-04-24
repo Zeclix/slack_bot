@@ -72,4 +72,7 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	if strings.Contains(e.Text, "비둘기") {
 		randomResponse(bot, e.Channel, ":gugu:", "비둘기", guguresp)
 	}
+	if strings.Contains(e.Text, "신촌 셔틀") {
+		processShuttleCommand(bot, e.Channel)
+	}
 }
