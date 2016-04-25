@@ -1,8 +1,11 @@
 package bot
 
-import "github.com/nlopes/slack"
-import "strings"
-import "math/rand"
+import (
+	"math/rand"
+	"strings"
+
+	"github.com/nlopes/slack"
+)
 
 func postResponse(bot *BaseBot, channel string, emoji string, name string, response string) {
 	bot.PostMessage(channel, response, slack.PostMessageParameters{
@@ -53,7 +56,7 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	if e.SubType == "bot_message" {
 		return
 	}
-	
+
 	if strings.Contains(e.Text, "72") || strings.Contains(e.Text, "치하야") || strings.Contains(e.Text, "큿") {
 		postResponse(bot, e.Channel, ":kutt:", "치하야", "큿")
 	}
@@ -71,5 +74,8 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	}
 	if strings.Contains(e.Text, "비둘기") {
 		randomResponse(bot, e.Channel, ":gugu:", "비둘기", guguresp)
+	}
+	if strings.Contains(e.Text, "신촌 셔틀") {
+		processShuttleCommand(bot, e.Channel)
 	}
 }
