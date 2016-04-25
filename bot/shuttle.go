@@ -11,9 +11,9 @@ import (
 )
 
 type BusInfo struct {
-	mBus    []string
-	aBus    []string
-	success bool
+	MBus    []string `json:"mBus"`
+	ABus    []string `json:"aBus"`
+	Success bool     `json:"success"`
 }
 
 var (
@@ -78,13 +78,13 @@ func processShuttleCommand(bot *BaseBot, channel string) {
 		return
 	}
 
-	attachments := make([]slack.AttachmentField, len(info.mBus)+len(info.aBus))
+	attachments := make([]slack.AttachmentField, len(info.MBus)+len(info.ABus))
 	index := 0
-	for _, pos := range info.mBus {
+	for _, pos := range info.MBus {
 		getShuttlePosition(&attachments[index], before_noon, pos)
 		index++
 	}
-	for _, pos := range info.aBus {
+	for _, pos := range info.ABus {
 		getShuttlePosition(&attachments[index], after_noon, pos)
 		index++
 	}
