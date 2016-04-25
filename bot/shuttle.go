@@ -51,7 +51,7 @@ func getShuttlePosition(field *slack.AttachmentField, arr []string, index_str st
 
 	field.Title = pos
 	var direction string
-	if index >= (arr_len-1)*2 {
+	if index < (arr_len-1)*2 {
 		direction = arr[arr_len-1]
 	} else {
 		direction = arr[0]
