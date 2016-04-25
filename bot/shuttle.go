@@ -80,11 +80,11 @@ func processShuttleCommand(bot *BaseBot, channel string) {
 
 	attachments := make([]slack.AttachmentField, len(info.mBus)+len(info.aBus))
 	index := 0
-	for pos := range info.mBus {
+	for _, pos := range info.mBus {
 		getShuttlePosition(&attachments[index], before_noon, pos)
 		index++
 	}
-	for pos := range info.aBus {
+	for _, pos := range info.aBus {
 		getShuttlePosition(&attachments[index], after_noon, pos)
 		index++
 	}
