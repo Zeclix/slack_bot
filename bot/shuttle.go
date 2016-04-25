@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/nlopes/slack"
 )
@@ -43,9 +44,9 @@ func getPositionFromIndex(arr []string, index int) string {
 	}
 }
 
-func getShuttlePosition(field *slack.AttachmentField, arr []string, index int) {
+func getShuttlePosition(field *slack.AttachmentField, arr []string, index_str string) {
 	arr_len := len(arr)
-
+	index, _ := strconv.Atoi(index_str)
 	pos := getPositionFromIndex(arr, index)
 
 	field.Title = pos
