@@ -2,10 +2,24 @@ package bot
 
 import (
 	"math/rand"
-	"strings"
+
+	"fmt"
+	"regexp"
 
 	"github.com/nlopes/slack"
 )
+
+func simpleMatch(content string, matches ...string) bool {
+	for _, match := range matches {
+		pattern := fmt.Sprintf("(^|[^가-힣\\S]|\u3000)%s($|[^가-힣\\S]|\u3000)", match)
+		matched, _ := regexp.MatchString(pattern, content)
+		if matched {
+			return true
+		}
+	}
+
+	return false
+}
 
 func postResponse(bot *BaseBot, channel string, emoji string, name string, response string) {
 	bot.PostMessage(channel, response, slack.PostMessageParameters{
@@ -57,25 +71,27 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 		return
 	}
 
-	if strings.Contains(e.Text, "72") || strings.Contains(e.Text, "치하야") || strings.Contains(e.Text, "큿") {
+	text := e.Text
+
+	if simpleMatch(text, "72", "치하야", "큿") {
 		postResponse(bot, e.Channel, ":kutt:", "치하야", "큿")
 	}
-	if strings.Contains(e.Text, "크킄") {
+	if simpleMatch(text, "크킄") {
 		postResponse(bot, e.Channel, ":chuni:", "Dark Flame Master", "흐콰한다")
 	}
-	if strings.Contains(e.Text, "안두인") {
+	if simpleMatch(text, "안두인") {
 		randomResponse(bot, e.Channel, ":anduin:", "안두인", anduinresp)
 	}
-	if strings.Contains(e.Text, "웃우") {
+	if simpleMatch(text, "웃우") {
 		randomResponse(bot, e.Channel, ":yayoyee:", "타카츠키 야요이", yayoiresp)
 	}
-	if strings.Contains(e.Text, "혼란하다 혼란해") {
+	if simpleMatch(text, "혼란하다 혼란해") {
 		postResponse(bot, e.Channel, ":honse:", "혼세마왕", "혼세혼세")
 	}
-	if strings.Contains(e.Text, "비둘기") {
+	if simpleMatch(text, "비둘기") {
 		randomResponse(bot, e.Channel, ":gugu:", "비둘기", guguresp)
 	}
-	if strings.Contains(e.Text, "신촌 셔틀") {
+	if simpleMatch(text, "신촌 셔틀") {
 		processShuttleCommand(bot, e.Channel)
 	}
 }
