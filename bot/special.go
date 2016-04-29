@@ -9,6 +9,8 @@ import (
 	"github.com/nlopes/slack"
 )
 
+// Simply match patterns
+// check boundary of patterns
 func simpleMatch(content string, matches ...string) bool {
 	for _, match := range matches {
 		pattern := fmt.Sprintf("(^|[^가-힣\\S]|\u3000)%s($|[^가-힣\\S]|\u3000)", match)
@@ -21,6 +23,7 @@ func simpleMatch(content string, matches ...string) bool {
 	return false
 }
 
+// Post response as bot
 func postResponse(bot *BaseBot, channel string, emoji string, name string, response string) {
 	bot.PostMessage(channel, response, slack.PostMessageParameters{
 		AsUser:    false,
@@ -30,6 +33,7 @@ func postResponse(bot *BaseBot, channel string, emoji string, name string, respo
 	})
 }
 
+// Post random response from responses array
 func randomResponse(bot *BaseBot, channel string, emoji string, name string, responses []string) {
 	response := responses[rand.Intn(len(responses))]
 	postResponse(bot, channel, emoji, name, response)
@@ -72,26 +76,27 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	}
 
 	text := e.Text
+	channel := e.Channel
 
 	if simpleMatch(text, "72", "치하야", "큿") {
-		postResponse(bot, e.Channel, ":kutt:", "치하야", "큿")
+		postResponse(bot, channel, ":kutt:", "치하야", "큿")
 	}
 	if simpleMatch(text, "크킄") {
-		postResponse(bot, e.Channel, ":chuni:", "Dark Flame Master", "흐콰한다")
+		postResponse(bot, channel, ":chuni:", "Dark Flame Master", "흐콰한다")
 	}
 	if simpleMatch(text, "안두인") {
-		randomResponse(bot, e.Channel, ":anduin:", "안두인", anduinresp)
+		randomResponse(bot, channel, ":anduin:", "안두인", anduinresp)
 	}
 	if simpleMatch(text, "웃우") {
-		randomResponse(bot, e.Channel, ":yayoyee:", "타카츠키 야요이", yayoiresp)
+		randomResponse(bot, channel, ":yayoyee:", "타카츠키 야요이", yayoiresp)
 	}
 	if simpleMatch(text, "혼란하다 혼란해") {
-		postResponse(bot, e.Channel, ":honse:", "혼세마왕", "혼세혼세")
+		postResponse(bot, channel, ":honse:", "혼세마왕", "혼세혼세")
 	}
 	if simpleMatch(text, "비둘기") {
-		randomResponse(bot, e.Channel, ":gugu:", "비둘기", guguresp)
+		randomResponse(bot, channel, ":gugu:", "비둘기", guguresp)
 	}
 	if simpleMatch(text, "신촌 셔틀") {
-		processShuttleCommand(bot, e.Channel)
+		processShuttleCommand(bot, channel)
 	}
 }
