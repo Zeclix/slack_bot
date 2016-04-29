@@ -1,5 +1,7 @@
 *~
 *.log
-goenv
+.goenv
 *.pyc
 *.pid
+*.test
+slack_bot
