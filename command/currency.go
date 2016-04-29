@@ -70,16 +70,21 @@ func CurrencyCommand(req Request) *Response {
 	}
 
 	original_value, _ := strconv.ParseFloat(matched[1], 64)
+	// Set default target
 	if matched[3] == "" {
 		matched[4] = "KRW"
 	}
 
 	src_value := original_value
+	// Normalize unit - begin
 	// make upper...
 	matched[2] = strings.ToUpper(matched[2])
-	applyAlias(&matched[2])
 	matched[4] = strings.ToUpper(matched[4])
+
+	// Alias
+	applyAlias(&matched[2])
 	applyAlias(&matched[4])
+	// Normalize unit - end
 
 	src_unit := matched[2]
 	target_unit := matched[4]
@@ -91,16 +96,21 @@ func CurrencyCommand(req Request) *Response {
 		src_value = src_value / info.rate
 		target_unit = info.unit
 	}
+
+	// make key to use in yql
 	key := fmt.Sprintf("%s%s", src_unit, target_unit)
 
 	rate := 0.0
+	// try use cached value - 10min
 	if cached, ok := rate_cache[key]; ok {
 		if time.Now().Sub(cached.cached_at).Minutes() < 10 {
 			rate = cached.rate
 		}
 	}
 
+	// when not yet cached
 	if rate == 0.0 {
+		// create yql url...
 		url := fmt.Sprintf("http://query.yahooapis.com/v1/public/yql?q=%s&env=%s",
 			strings.Replace(
 				url.QueryEscape(
@@ -118,6 +128,7 @@ func CurrencyCommand(req Request) *Response {
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(resp.Body)
 		b := buf.Bytes()
+		// parse result
 		err = xml.Unmarshal(b, &query)
 		if err != nil {
 			ret.Text = fmt.Sprintf("Result parsing error : %q", err)
@@ -131,6 +142,7 @@ func CurrencyCommand(req Request) *Response {
 			}
 		}
 
+		// save result into cache
 		if rate != 0.0 {
 			rate_cache[key] = rateCache{
 				rate:      rate,
@@ -144,6 +156,7 @@ func CurrencyCommand(req Request) *Response {
 
 	ret.ResponseType = deffered_in_channel
 
+	// create result
 	ret.Attachments = []Attachment{
 		Attachment{
 			Color: Color{r: 33, g: 108, b: 42},
