@@ -71,6 +71,13 @@ var (
 	nicoresp []string = []string{
 		":the_horns::wink::the_horns: 니코니코니! 아나타노 하토니 니코니코니! 에가오 토도케루 야자와 니코니코! 앗 도뭬도뭬도뭬 니코니와 민나노 모. 노!",
 	}
+	umiresp []string = []string{
+		"모두의 하트! 꿰뚫어버릴거야! BANG!",
+		"파렴치해요!",
+		"으헿!",
+		"다음번엔 이길겁니다!",
+		"러브 애로우 슛!",
+	}
 )
 
 func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
@@ -105,5 +112,8 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	}
 	if simpleMatch(text, "니코니코니", "25252"){
 		randomResponse(bot, channel, ":niconiconii:", "야자와 니코", nicoresp)
+	}
+	if simpleMatch(text, "우미쨩", "응미쨩"){
+		randomResponse(bot, channel, ":zeclixwife:", "소노다 우미", umiresp)
 	}
 }
