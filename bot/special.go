@@ -66,6 +66,10 @@ var (
 	guguresp []string = []string{
 		"구구구",
 		"@scarlet9",
+		
+	}
+	nicoresp []string = []string{
+		":the_horns::wink::the_horns: 니코니코니! 아나타노 하토니 니코니코니! 에가오 토도케루 야자와 니코니코! 앗 도뭬도뭬도뭬 니코니와 민나노 모. 노!",
 	}
 )
 
@@ -98,5 +102,8 @@ func specialResponses(bot *BaseBot, e *slack.MessageEvent) {
 	}
 	if simpleMatch(text, "신촌 셔틀") {
 		processShuttleCommand(bot, channel)
+	}
+	if simpleMatch(text, "니코니코니", "25252"){
+		randomResponse(bot, channel, ":niconiconii:", "야자와 니코", nicoresp)
 	}
 }
